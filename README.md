@@ -5,6 +5,7 @@
     </a>
 </p>
 Create DB with name "certainty" in MySQL and after set credentials in .env file
+
 ## CLI
 
 1) php artisan serve
