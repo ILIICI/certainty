@@ -38,6 +38,7 @@ class PostController extends Controller
         if ($images = $request->file('fileupload'))
         {
             $db_post = new Post;
+            $db_post = new Post;
             $db_post->_name = $request->input('name');
             $db_post->_surname = $request->input('surname');
             $db_post->_address = $request->input('address');
