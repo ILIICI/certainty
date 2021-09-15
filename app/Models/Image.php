@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Image extends Model
 {
+    public $timestamps = false;
+    
     use HasFactory;
     protected $table = 'images';
     protected $primaryKey = 'id';
@@ -18,4 +20,5 @@ class Image extends Model
     public function imageModels(){
         return $this->belongsTo(Post::class);
     }
+
 }
