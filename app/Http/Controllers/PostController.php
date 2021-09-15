@@ -3,11 +3,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\Image;
-use Illuminate\Support\Str;
+
+use App\Classes\Helper;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\FormPostRequest;
 use Illuminate\Support\Facades\Schema;
+
+
+
 
 class PostController extends Controller
 {
@@ -37,12 +42,12 @@ class PostController extends Controller
             $db_post->_surname = $request->input('surname');
             $db_post->_address = $request->input('address');
             $db_post->_description = $request->input('description');
-            $db_post->code = Str::random(10);
+            $db_post->code = Helper::getUniqueCode($request->input('name'));
             $db_post->save();
             foreach ($images as $image)
             {
                 $db_image = new Image;
-                $img_name = uniqid();
+                $img_name = md5(str_shuffle(uniqid()));
                 $img_extension = strtolower($image->getClientOriginalExtension());
                 $fullname = $img_name . '.' . $img_extension;
                 $path = "documents/";
@@ -73,7 +78,10 @@ class PostController extends Controller
             {
                 $img_array['images'][] = $path['_image_path'];
             }
-            $display = ['FirstName' => $store_text['_name'], 'SecondName' => $store_text['_surname'], 'Address' => $store_text['_address'], 'Description' => $store_text['_description'], ];
+            $display = ['FirstName' => $store_text['_name'], 
+                    'SecondName' => $store_text['_surname'], 
+                    'Address' => $store_text['_address'], 
+                    'Description' => $store_text['_description'], ];
 
             $merge_arrays = array_merge($img_array, $display);
         }
