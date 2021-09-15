@@ -9,9 +9,13 @@ class Image extends Model
 {
     use HasFactory;
     protected $table = 'images';
-    protected $fillable = ['id',
-                            'user_id',
+    protected $primaryKey = 'id';
+
+    protected $fillable = [
+                            'post_id',
                             '_image_path'];
 
-
+    public function imageModels(){
+        return $this->belongsTo(Post::class);
+    }
 }

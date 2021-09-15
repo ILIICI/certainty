@@ -38,12 +38,11 @@ class PostController extends Controller
         if ($images = $request->file('fileupload'))
         {
             $db_post = new Post;
-            $db_post = new Post;
             $db_post->_name = $request->input('name');
             $db_post->_surname = $request->input('surname');
             $db_post->_address = $request->input('address');
             $db_post->_description = $request->input('description');
-            $db_post->code = Helper::getUniqueCode($request->input('name'));
+            $db_post->_code = Helper::getUniqueCode($request->input('name'));
             $db_post->save();
             foreach ($images as $image)
             {
@@ -54,43 +53,23 @@ class PostController extends Controller
                 $path = "documents/";
                 $image->move($path, $fullname);
                 $db_image->_image_path = $path . $fullname;
-                $db_image->user_id = $db_post->id;
+                $db_image->post_id = $db_post->id;
                 $db_image->save();
             }
             return redirect()
             ->back()
             ->with("success", "Data Added Successfully")
-            ->with('link', $db_post->code);
+            ->with('link', $db_post->_code);
         }
         
     }
 
     public function show($code)
     {
-        $db_post = new Post;
-        $db_image = new Image;
-
-        if ($db_post->where('code', $code)->first())
-        {
-            $store_text = $db_post->where('code', $code)->first();
-            $id = $db_post->where('code', $code)->get('id');
-            $store_img = $db_image->where('user_id', $id['0']['id'])->get('_image_path');
-            foreach ($store_img as $path)
-            {
-                $img_array['images'][] = $path['_image_path'];
-            }
-            $display = ['FirstName' => $store_text['_name'], 
-                    'SecondName' => $store_text['_surname'], 
-                    'Address' => $store_text['_address'], 
-                    'Description' => $store_text['_description'], ];
-
-            $merge_arrays = array_merge($img_array, $display);
-        }
-        else
-        {
-            abort(404);
-        }
-        return view('show')->with('array', $merge_arrays);
+      $db_post = Post::where('_code',$code)->firstOrFail();
+        //dd($db_post);
+        //dd($db_post->postModels);
+      return view('show')->with('data',$db_post);
     }
 
 }

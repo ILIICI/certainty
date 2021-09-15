@@ -1,27 +1,47 @@
 @extends('master')
-@section('content')
-    @foreach ( $array as $values )
-        @if (is_array($values))
-        <section class="overflow-hidden text-gray-700 ">
-            <div class="container px-5 py-2 mx-auto lg:pt-12 lg:px-32">
-            <div class="flex flex-wrap -m-1 md:-m-2">
-                @foreach ($values as $value )
-                <div class="flex flex-wrap w-1/3">
-                    <div class="w-full p-1 md:p-2">
-                        <img alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
-                            src="{{route('url').'/'.$value}}">
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </section>
-        @else
-        <div class="grid grid-cols-3 gap-4 w-3/4 m-auto">
-            <div class="border-t-4 border-purple-500 pt-4">
-                <p class="uppercase text-purple-500 font-bold">{{ $values }}</p>
-            </div>
+
+    @section('content')
+    <div class="container mx-auto px-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+        Name:
+        <p class="text-red-700">{{ $data->_name }}</p>
+      </label>
+    
+    <br>
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="surname">
+        Surname:
+        <p class="text-red-700">{{ $data->_surname }}</p>
+      </label>
+    
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="address">
+        Address:
+        <p class="text-red-700">{{ $data->_address }}</p>
+      </label>
+    <br>
+    
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="description">
+        Description: 
+        <p class="text-red-700">{{ $data->_description }}</p>
+      </label>
+    <br>
+   
+     
+    <div class="container mx-auto px-4"> 
+                
+      <section class="py-8 px-4">
+        <div class="flex flex-wrap -mx-4 -mb-8">
+        @foreach ($data->postModels as $image)
+            <div class="md:w-1/4 px-4 mb-8">
+                 <img class="rounded shadow-md" src="{{route('url').'/'.$image['_image_path']}}" alt="Image from DB">
+            </div> 
+        @endforeach
         </div>
-        @endif
-    @endforeach
-@endsection
+      </section>
+    </div>
+
+</div>
+
+
+
+    @endsection
 
