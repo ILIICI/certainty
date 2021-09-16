@@ -56,7 +56,7 @@ class PostController extends Controller
             $fullname = $img_name . '.' . $img_extension;
             $path = "documents/";
             $image->move($path, $fullname);
-            $db_post->postModels()->create(['_image_path' => $path . $fullname, 
+            $db_post->getImageModels()->create(['_image_path' => $path . $fullname, 
             'post_id' => $db_post->id, ]);
             }
 

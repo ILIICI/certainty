@@ -20,7 +20,7 @@ class Post extends Model
                             '_description',
                             '_code'];
 
-    public function postModels(){
+    public function getImageModels(){
         return $this->hasMany(Image::class);
     }
 

@@ -30,7 +30,7 @@
                 
       <section class="py-8 px-4">
         <div class="flex flex-wrap -mx-4 -mb-8">
-        @foreach ($data->postModels as $image)
+        @foreach ($data->getImageModels as $image)
             <div class="md:w-1/4 px-4 mb-8">
                  <img class="rounded shadow-md" src="{{route('url').'/'.$image['_image_path']}}" alt="Image from DB">
             </div> 
