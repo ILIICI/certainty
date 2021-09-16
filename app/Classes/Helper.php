@@ -22,7 +22,7 @@ class Helper
     } 
     public static function check_Table_Column_Exists($table , ... $array){
         $checker = true;
-        foreach ($array as $value) {
+        foreach ($array as $key => $value) {
             foreach ($value as $name) {
                 if(!Schema::hasColumn($table,$name)){
                     $checker = false;
