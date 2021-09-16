@@ -43,22 +43,26 @@ class PostController extends Controller
         {
             abort(404);
         }
-        $db_post = Post::create(['_name' => $request->input('name'), 
-        '_surname' => $request->input('surname'), 
-        '_address' => $request->input('address'), 
-        '_description' => $request->input('description'), 
-        '_code' => Helper::getUniqueCode($request->input('name')), ]);
 
-            foreach ($request->file('fileupload') as $image)
-            {
-            $img_name = md5(str_shuffle(uniqid()));
-            $img_extension = strtolower($image->getClientOriginalExtension());
-            $fullname = $img_name . '.' . $img_extension;
-            $path = "documents/";
-            $image->move($path, $fullname);
-            $db_post->getImageModels()->create(['_image_path' => $path . $fullname, 
-            'post_id' => $db_post->id, ]);
-            }
+        $db_post = new Post;
+        $db_post->_name = $request->input('name');
+        $db_post->_surname = $request->input('surname');
+        $db_post->_address = $request->input('address');
+        $db_post->_description = $request->input('description');
+        $db_post->_code = Helper::getUniqueCode($request->input('name'));
+        $db_post->save();
+
+        foreach ($request->file('fileupload') as $image)
+        {
+        $db_image = new Image;
+        $img_name = md5(str_shuffle(uniqid()));
+        $img_extension = strtolower($image->getClientOriginalExtension());
+        $fullname = $img_name . '.' . $img_extension;
+        $path = "documents/";
+        $image->move($path, $fullname);
+        $db_image->_image_path = $path . $fullname;
+        $db_post->postModels()->save($db_image);
+        }     
 
         return redirect()
             ->back()

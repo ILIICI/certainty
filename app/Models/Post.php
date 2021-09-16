@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Post extends Model
 {
     public $timestamps = false;
-    
     use HasFactory;
     protected $table = 'posts';
     protected $primaryKey = 'id';
@@ -20,7 +19,7 @@ class Post extends Model
                             '_description',
                             '_code'];
 
-    public function getImageModels(){
+    public function postModels(){
         return $this->hasMany(Image::class);
     }
 
