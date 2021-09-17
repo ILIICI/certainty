@@ -15,6 +15,7 @@ class PostController extends Controller
 {
     public function store(FormPostRequest $request)
     {
+        
         if (!DB::connection()->getDatabaseName())
         {
             return redirect()
@@ -51,7 +52,7 @@ class PostController extends Controller
         $db_post->_description = $request->input('description');
         $db_post->_code = Helper::getUniqueCode($request->input('name'));
         $db_post->save();
-
+        
         foreach ($request->file('fileupload') as $image)
         {
         $db_image = new Image;
